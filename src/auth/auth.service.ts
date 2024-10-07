@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { CreateAnonymDto } from '../user/dto/create-anonym.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,10 +14,6 @@ export class AuthService {
   async signup(userDto: CreateUserDto) {
     return this.userService.create(userDto);
   }
-
-  // async CreateSessionAnonym(anonymDto: CreateAnonymDto) {
-  //   return this.userService.createAnonym(anonymDto);
-  // }
 
   async validateLogin(email: string, password: string): Promise<any> {
     const user = await this.userService.findByMail(email, true);

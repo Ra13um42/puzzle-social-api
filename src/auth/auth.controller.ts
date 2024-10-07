@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { CreateAnonymDto } from '../user/dto/create-anonym.dto';
 
 import { LoginUserDto } from '../user/dto/login-user.dto';
 import { Public } from './decorator/public.decorator';
@@ -46,15 +45,6 @@ export class AuthController {
 
     return { user, access_token };
   }
-
-  // @Public()
-  // @Post('anonym')
-  // async anonym(@Body() anonymDto: CreateAnonymDto) {
-  //   const user = await this.authService.anonym(anonymDto);
-  //   const access_token = await this.authService.createToken(user);
-
-  //   return { user, access_token };
-  // }
 
   @Get('check')
   async check(@Request() req) {

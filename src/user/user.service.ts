@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './models/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { CreateAnonymDto } from './dto/create-anonym.dto';
 import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
@@ -31,17 +30,6 @@ export class UserService {
     newUser.password = undefined;
     return newUser;
   }
-
-  // async createAnonym(anonymDto: CreateAnonymDto): Promise<User> {
-  //   let newUser = new this.userModel({
-  //     anonym: true,
-  //     created: Date(),
-  //     lastLogin: Date(),
-  //   });
-
-  //   newUser = await newUser.save();
-  //   return newUser;
-  // }
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
