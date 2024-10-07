@@ -69,7 +69,7 @@ export class UserController {
   @Post(':id/photo')
   @UseInterceptors(
     FileInterceptor('photo', {
-      dest: 'static/photos/',
+      dest: '../static/photos/',
     }),
   )
   async setPhoto(@Request() req, @UploadedFile() file: Express.Multer.File) {

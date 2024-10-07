@@ -16,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     UserModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'static'),
+      rootPath: join(__dirname, '../..', 'static'),
       serveStaticOptions: { index: false },
     }),
     ConfigModule.forRoot(),
