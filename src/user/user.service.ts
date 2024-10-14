@@ -3,6 +3,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './models/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SetLocationDto } from './dto/set-location.dto';
 import * as bcrypt from 'bcrypt';
 import {v4 as uuidv4} from 'uuid';
 
@@ -119,6 +120,35 @@ export class UserService {
         },
       },
     );
+  }
+
+  public async deleteUser(userId) {
+    const query = { _id: userId };
+    return await this.userModel.deleteOne(query).exec();
+  }
+
+  public async setLocation(userId, locationData: SetLocationDto) {
+    
+    if (locationData && locationData.location && locationData.country) {
+
+      const geometry = {
+        type: 'Point',
+        coordinates: [locationData.location.lon, locationData.location.lat],
+      };
+  
+      const update = {
+        geometry: geometry,
+        location: locationData.location,
+        country: locationData.country
+      };
+
+      const query = { _id: userId };
+  
+      return this.userModel.updateOne(query, update).exec();
+
+    } else {
+      throw new BadRequestException('Daten unvollständig');
+    }
   }
 
 //   public async findNear(locationId) {

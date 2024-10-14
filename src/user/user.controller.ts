@@ -4,6 +4,7 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Request,
   Param,
   Query,
@@ -16,6 +17,7 @@ import { User } from './models/user.model';
 import { Public } from '../auth/decorator/public.decorator';
 import { SetNameDto } from './dto/set-name.dto';
 import { SetAboutDto } from './dto/set-about.dto';
+import { SetLocationDto } from './dto/set-location.dto';
 
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express/';
@@ -61,10 +63,10 @@ export class UserController {
     this.userService.setAbout(req.user.userId, setAboutDto.about);
   }
 
-  // @Put(':id/location')
-  // async setLocation(@Query('id') locationId: string, @Request() req) {
-  //   this.userService.setLocation(req.user.userId, locationId);
-  // }
+  @Put(':id/location')
+  async setLocation(@Body() locationData: SetLocationDto, @Request() req) {
+    this.userService.setLocation(req.user.userId, locationData);
+  }
 
   @Post(':id/photo')
   @UseInterceptors(
@@ -75,5 +77,10 @@ export class UserController {
   async setPhoto(@Request() req, @UploadedFile() file: Express.Multer.File) {
     await this.userService.setPhoto(req.user.userId, file.filename);
     return file.filename;
+  }
+
+  @Delete(':id')
+  async deleteUser(@Request() req) {
+    this.userService.deleteUser(req.user.userId);
   }
 }

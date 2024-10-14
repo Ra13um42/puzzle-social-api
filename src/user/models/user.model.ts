@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-// import { pointSchema } from '../../location/models/point.schema';
+import { pointSchema } from '../../location/models/point.schema';
+import { location } from '../../location/models/location.type';
+import { country } from '../../location/models/country.type';
 
 @Schema()
 export class User {
@@ -35,5 +37,14 @@ export class User {
 
   @Prop()
   eventsKey: string;
+
+  @Prop({ type: pointSchema, default: null })
+  geometry: any;
+
+  @Prop({ type: location, default: null })
+  location: location;
+
+  @Prop({ type: country, default: null })
+  country: country;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
